@@ -1,0 +1,22 @@
+[package]
+name = "DRC_lib"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+decide-protocol = {git = "https://github.com/melizalab/decide-rs", branch = "main"}
+
+house_light = {git = "https://github.com/melizalab/decide-rs", branch = "components-shutdown"}
+peckboard = {git = "https://github.com/melizalab/decide-rs", branch = "components-shutdown"}
+sound_alsa = {git = "https://github.com/melizalab/decide-rs", branch = "components-shutdown"}
+stepper_motor = {git = "https://github.com/melizalab/decide-rs", branch = "components-shutdown"}
+
+tmq = { version = "0.3", features = ["zmq-vendored"] }
+tokio = { version = "1.12", features = ["full"] }
+prost = "0.11.0"
+prost-types = "0.11.1"
+
+[build-dependencies]
+prost-build = "0.11.1"
