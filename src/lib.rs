@@ -1,4 +1,8 @@
+//! #DRC_lib
+//!
+//! Library for designing decide-rs clients
 pub mod cli_param {
+
     use decide_protocol::{
         ComponentName,
         ComponentRequest,
@@ -38,7 +42,11 @@ pub mod cli_param {
         tracing::trace!("reply");
         Ok(reply.result.unwrap())
     }
-    pub async fn set_hl(interval:i64) {
+
+    /// Init House Light Params
+    /// interval = wait duration in secs
+    /// Recommended 300
+    pub async fn set_hl(interval:i64) -> Result<()>{
         let params = prost_types::Any {
             type_url: String::from(HS_PARAMS_TYPE_URL),
             value: hl_proto::Params {
@@ -62,8 +70,11 @@ pub mod cli_param {
         };
         let result = send_request(request).await.unwrap();
         assert_eq!(result, reply::Result::Params(params.into()));
+        Ok(())
     }
-    pub async fn set_pbled() {
+    /// Init PeckBoard LEDs Params
+    /// No Params specified
+    pub async fn set_pbled() -> Result<()>{
         let params = Any {
             type_url: String::from(PL_PARAMS_TYPE_URL),
             value: pb_proto::LedParams {
@@ -91,9 +102,13 @@ pub mod cli_param {
             };
             let result = send_request(request).await.unwrap();
             assert_eq!(result, reply::Result::Params(params.into()));
-        }
+        };
+        Ok(())
     }
-    pub async fn set_pbkey() {
+
+    /// Init PeckBoard Key Params
+    /// No Params specified
+    pub async fn set_pbkey() -> Result<()>{
         let led_params = Any {
             type_url: String::from(PK_PARAMS_TYPE_URL),
             value: pb_proto::KeyParams {
@@ -117,8 +132,13 @@ pub mod cli_param {
         };
         let result = send_request(request).await.unwrap();
         assert_eq!(result, reply::Result::Params(params));
+        Ok(())
     }
-    pub async fn set_sm(timeout:u64) {
+
+    /// Init Stepper Motor Params
+    /// timeout = duration to run motor after 1 signal in ms
+    /// Recommended 1000
+    pub async fn set_sm(timeout:u64) -> Result<()>{
         let params = Any {
             type_url: String::from(SM_PARAMS_TYPE_URL),
             value: sm_proto::Params {
@@ -142,8 +162,12 @@ pub mod cli_param {
         };
         let result = send_request(request).await.unwrap();
         assert_eq!(result, reply::Result::Params(params.into()));
+        Ok(())
     }
-    pub async fn set_playback() {
+
+    /// Init Audio Playback Params
+    /// No Params specified
+    pub async fn set_playback() -> Result<()>{
         let params = Any {
             type_url: String::from(PLB_PARAMS_TYPE_URL),
             value: pb_proto::Params {
@@ -166,6 +190,7 @@ pub mod cli_param {
         };
         let result = send_request(request).await.unwrap();
         assert_eq!(result, reply::Result::Params(params.into()));
+        Ok(())
     }
 
 }
